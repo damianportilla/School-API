@@ -11,27 +11,33 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy.Strategy;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table
 public class Alumno extends Persona {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idAlumno;
+	private Long id_Alumno;
 
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "AlumnoCurso", joinColumns = { @JoinColumn(name = "idAlumno") }, inverseJoinColumns = {
+	@JoinTable(name = "Alumno_Curso", joinColumns = { @JoinColumn(name = "id_Alumno") }, inverseJoinColumns = {
 			@JoinColumn(name = "idCurso") })
+	@JsonIgnore
 	private Set<Curso> cursos = new HashSet<>();
+
+
 
 }

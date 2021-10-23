@@ -4,10 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @MappedSuperclass
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public abstract class Persona {
@@ -20,4 +24,6 @@ public abstract class Persona {
 	private String dni;
 	@Column
 	private String domicilio;
+	
+	
 }

@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +27,11 @@ public class Curso {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
-	private Long idCurso;
+	private Long id_Curso;
 	@Column
 	private String nombreCurso;
 	@ManyToMany(cascade = {CascadeType.ALL},mappedBy="cursos")
+	@JsonIgnore
 	private Set<Alumno> alumnos = new HashSet<>();
 
 }

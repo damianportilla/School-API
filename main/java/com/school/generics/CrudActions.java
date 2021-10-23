@@ -2,10 +2,6 @@ package com.school.generics;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
-import com.school.model.Alumno;
-
 public interface CrudActions<T , ID> {
 
 	void create(T ob);

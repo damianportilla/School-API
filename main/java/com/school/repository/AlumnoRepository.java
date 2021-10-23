@@ -18,7 +18,7 @@ public class AlumnoRepository {
 
 	@Transactional
 	public void insertWithEntityManager(Alumno alumno) {
-		this.entityManager.persist(alumno);
+		entityManager.persist(alumno);
 	}
 
 	@Transactional
@@ -33,7 +33,7 @@ public class AlumnoRepository {
 
 	@Transactional
 	public List<Alumno> findAllAlumnos() {
-		return entityManager.createQuery("from Alumno").getResultList();
+		return (List<Alumno>)entityManager.createQuery("from Alumno").getResultList();
 	}
 
 	@Transactional

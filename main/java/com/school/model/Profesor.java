@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,17 +22,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class Profesor extends Persona {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idProfesor;
+	private Long id_Profesor;
 
 	@ManyToMany(cascade= {CascadeType.ALL})
 	@JoinTable(name="ProfesoCursor", joinColumns = {@JoinColumn(name="idProfesor")}, inverseJoinColumns = {@JoinColumn(name="idCurso")})
+	@JsonIgnore
 	private Set<Curso> cursos = new HashSet<>();
+
+	
+	
 	
 }

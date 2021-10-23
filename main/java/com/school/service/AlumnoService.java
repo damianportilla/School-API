@@ -22,14 +22,12 @@ public class AlumnoService implements AlumnoDAO {
 
 	@Override
 	public Alumno getById(Long id) {
-		Alumno alumno = alumnoRepository.getAlumnoByIdWithEntityManager(id);
-		return alumno;
+		return alumnoRepository.getAlumnoByIdWithEntityManager(id);
 	}
 
 	@Override
 	public List<Alumno> getAll() {
-		List<Alumno> alumnos = alumnoRepository.findAllAlumnos();
-		return alumnos;
+		return (List<Alumno>) alumnoRepository.findAllAlumnos();
 	}
 
 	@Override
@@ -39,12 +37,12 @@ public class AlumnoService implements AlumnoDAO {
 
 	@Override
 	public List<Alumno> getByName(String name) {
-		return  (List<Alumno>)alumnoRepository.findByName(name);
+		return (List<Alumno>) alumnoRepository.findByName(name);
 	}
 
 	@Override
 	public void update(Alumno alumno) {
-			alumnoRepository.updateAlumno(alumno);
+		alumnoRepository.updateAlumno(alumno);
 	}
 
 }
