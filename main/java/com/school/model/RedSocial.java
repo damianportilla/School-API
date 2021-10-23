@@ -17,7 +17,7 @@ import lombok.Setter;
 public class RedSocial {
 
 	@Id
-	private Long id;
+	private Long idRedSocial;
 	@Column
 	private String nombre;
 	@Column
