@@ -29,7 +29,7 @@ public class Curso {
 	@Column
 	private Long id_Curso;
 	@Column
-	private String nombreCurso;
+	private String nombre_Curso;
 	@ManyToMany(cascade = {CascadeType.ALL},mappedBy="cursos")
 	@JsonIgnore
 	private Set<Alumno> alumnos = new HashSet<>();

@@ -32,7 +32,7 @@ public class Profesor extends Persona {
 	private Long id_Profesor;
 
 	@ManyToMany(cascade= {CascadeType.ALL})
-	@JoinTable(name="ProfesoCursor", joinColumns = {@JoinColumn(name="idProfesor")}, inverseJoinColumns = {@JoinColumn(name="idCurso")})
+	@JoinTable(name="Profesor_Curso", joinColumns = {@JoinColumn(name="id_Profesor")}, inverseJoinColumns = {@JoinColumn(name="id_Curso")})
 	@JsonIgnore
 	private Set<Curso> cursos = new HashSet<>();
 

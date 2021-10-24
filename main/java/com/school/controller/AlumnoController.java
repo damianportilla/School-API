@@ -52,20 +52,20 @@ public class AlumnoController {
 
 	// Post
 	@PostMapping(value = "/alumnos")
-	public void addAlumno(@RequestBody Alumno alumno) {
-		alumnoService.create(alumno);
-//		if (alumno.getNombre().equals(null)) {
-//			return new ResponseEntity(new CustomError("El campo nombre no puede estar vacio"), HttpStatus.CONFLICT);
-//		}
-//
+	public ResponseEntity<Alumno> addAlumno(@RequestBody Alumno alumno, UriComponentsBuilder uriComponentsBuilder) {
+		if (alumno.getNombre().equals(null)) {
+			return new ResponseEntity(new CustomError("El campo nombre no puede estar vacio"), HttpStatus.CONFLICT);
+		}
+		
 //		if (alumnoService.getById(alumno.getId_Alumno()) != null) {
 //			return new ResponseEntity(new CustomError("Ya existe un alumno con ese ID"), HttpStatus.CONFLICT);
 //		}
-//		alumnoService.create(alumno);
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setLocation(
-//				uriComponentsBuilder.path("/v1/alumnos/{id}").buildAndExpand(alumno.getId_Alumno()).toUri());
-//		return new ResponseEntity<Alumno>(alumno, HttpStatus.CREATED);
+
+		alumnoService.create(alumno);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(
+				uriComponentsBuilder.path("/v1/alumnos/{id}").buildAndExpand(alumno.getId_Alumno()).toUri());
+		return new ResponseEntity<Alumno>(alumno, HttpStatus.CREATED);
 //
 	}
 
@@ -106,4 +106,6 @@ public class AlumnoController {
 		alumnoService.update(alumnoAux);
 		return new ResponseEntity<Alumno>(alumno, HttpStatus.OK);
 	}
+	
+	
 }
