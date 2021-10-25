@@ -1,4 +1,9 @@
-insert into CURSO(nombre_curso) values ('Java'),('C#'),('Javascript'),('Python');
+insert into CURSO(nombre_curso) values 
+('Java'),
+('C#'),
+('Javascript'),
+('Python'),
+('Java SE');
 insert into ALUMNO (dni,domicilio,email,nombre)values
 ('miDNI1 ','domicilio1','ccccc@gmail.com','Leandro'),
 ('miDNI2 ','domicilio2','mbritez@gmail.com','Matias'),

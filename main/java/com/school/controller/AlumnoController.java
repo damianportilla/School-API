@@ -57,10 +57,6 @@ public class AlumnoController {
 			return new ResponseEntity(new CustomError("El campo nombre no puede estar vacio"), HttpStatus.CONFLICT);
 		}
 		
-//		if (alumnoService.getById(alumno.getId_Alumno()) != null) {
-//			return new ResponseEntity(new CustomError("Ya existe un alumno con ese ID"), HttpStatus.CONFLICT);
-//		}
-
 		alumnoService.create(alumno);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(
