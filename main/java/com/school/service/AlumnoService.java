@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.school.dao.AlumnoDAO;
 import com.school.model.Alumno;
+import com.school.model.Curso;
 import com.school.repository.AlumnoRepository;
 
 @Service

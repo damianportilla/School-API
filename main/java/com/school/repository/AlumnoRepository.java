@@ -33,16 +33,14 @@ public class AlumnoRepository {
 
 	@Transactional
 	public List<Alumno> findAllAlumnos() {
-		return (List<Alumno>)entityManager.createQuery("from Alumno").getResultList();
+		return (List<Alumno>) entityManager.createQuery("from Alumno").getResultList();
 	}
 
 	@Transactional
 	public List<Alumno> findByName(String name) {
-		return entityManager.createQuery
-				("from Alumno where nombre = :name")
-				.setParameter("name",name).getResultList();
+		return entityManager.createQuery("from Alumno where nombre = :name").setParameter("name", name).getResultList();
 	}
-	
+
 	@Transactional
 	public void updateAlumno(Alumno alumno) {
 		entityManager.merge(alumno);

@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.school.error.CustomError;
 import com.school.model.Alumno;
 import com.school.service.AlumnoService;
+import com.school.service.CursoService;
 
 @RestController
 @RequestMapping(value = "/v1/api/alumnos")
@@ -27,6 +28,9 @@ public class AlumnoController {
 
 	@Autowired
 	AlumnoService alumnoService;
+	
+	@Autowired
+	CursoService cursoService;
 
 	// busqueda de todos los alumnos o por nombre con param
 	@GetMapping
@@ -56,7 +60,7 @@ public class AlumnoController {
 		if (alumno.getNombre().equals(null)) {
 			return new ResponseEntity(new CustomError("El campo nombre no puede estar vacio"), HttpStatus.CONFLICT);
 		}
-		
+
 		alumnoService.create(alumno);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(
@@ -75,17 +79,15 @@ public class AlumnoController {
 			Alumno alumno = alumnoService.getById(idAlumno);
 			if (alumno == null) {
 				return new ResponseEntity(new CustomError("No se ingreso un id de alumno valido"), HttpStatus.CONFLICT);
-			} else {
-				return new ResponseEntity<Alumno>(alumno, HttpStatus.OK);
 			}
+			return new ResponseEntity<Alumno>(alumno, HttpStatus.OK);
 		}
 		return null;
 	}
 
 	// Actualizar un registro
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Alumno> patchAlumno(@PathVariable(name = "id") Long idAlumno, 
-			@RequestBody Alumno alumno) {
+	public ResponseEntity<Alumno> patchAlumno(@PathVariable(name = "id") Long idAlumno, @RequestBody Alumno alumno) {
 		if (idAlumno == null || idAlumno <= 0) {
 			return new ResponseEntity(new CustomError("No se ingreso un id de alumno valido"), HttpStatus.CONFLICT);
 		}
@@ -95,18 +97,14 @@ public class AlumnoController {
 			return new ResponseEntity(new CustomError("No existe el alumno"), HttpStatus.CONFLICT);
 		}
 
-		alumnoAux=Alumno.builder()
-		.nombre(alumno.getNombre())
-		.dni(alumno.getDni())
-		.domicilio(alumno.getDomicilio())
-		.email(alumno.getEmail())
-		.id_Alumno(idAlumno)
-		.build();
+		alumnoAux = Alumno.builder().nombre(alumno.getNombre()).dni(alumno.getDni()).domicilio(alumno.getDomicilio())
+				.email(alumno.getEmail()).id_Alumno(idAlumno).build();
 
 		alumnoService.update(alumnoAux);
-		
+
 		return new ResponseEntity<Alumno>(alumno, HttpStatus.OK);
 	}
-	
+
+
 	
 }

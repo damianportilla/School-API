@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,10 +36,8 @@ public class Alumno extends Persona {
 	private Long id_Alumno;
 
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Alumno_Curso", 
-	joinColumns = { @JoinColumn(name = "id_Alumno") }, 
-	inverseJoinColumns = {
-			@JoinColumn(name = "id_Curso") })
+	@JoinTable(name = "Alumno_Curso", joinColumns = { @JoinColumn(name = "id_Alumno") },inverseJoinColumns = {@JoinColumn(name = "id_Curso") })
+	@ElementCollection
 	private Set<Curso> cursos = new HashSet<>();
 
 }

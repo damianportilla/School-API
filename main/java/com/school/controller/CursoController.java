@@ -23,13 +23,13 @@ import com.school.repository.CursoRepository;
 import com.school.service.CursoService;
 
 @RestController
-@RequestMapping(value = "/v1/api")
+@RequestMapping(value = "/v1/api/cursos")
 public class CursoController {
 
 	@Autowired
 	CursoService cursoService;
 
-	@GetMapping(value = "/cursos")
+	@GetMapping
 	public ResponseEntity<List<Curso>> getAllCursos(@RequestParam(value = "name", required = false) String name) {
 		List<Curso> cursos = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class CursoController {
 		}
 	}
 
-	@GetMapping(value = "/cursos/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Curso> getCursoById(@PathVariable(value = "id") Long id_Curso) {
 
 		if (id_Curso == null || id_Curso <= 0) {
@@ -63,10 +63,8 @@ public class CursoController {
 		return new ResponseEntity<Curso>(curso, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/cursos")
-	public ResponseEntity<Curso> addCurso(
-			@RequestBody Curso curso, 
-			UriComponentsBuilder uriComponentsBuilder) {
+	@PostMapping
+	public ResponseEntity<Curso> addCurso(@RequestBody Curso curso,	UriComponentsBuilder uriComponentsBuilder) {
 		
 		if(curso.getNombre_Curso()==null){
 			return new ResponseEntity(new CustomError("Error: Campo nombre vacio"), HttpStatus.CONFLICT);
