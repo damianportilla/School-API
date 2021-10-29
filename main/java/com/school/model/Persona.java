@@ -1,29 +1,26 @@
 package com.school.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import java.io.Serializable;
+
 import javax.persistence.MappedSuperclass;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
-@AllArgsConstructor
-@NoArgsConstructor
+@SuperBuilder
 @Getter
 @Setter
-public abstract class Persona {
+@NoArgsConstructor
+@AllArgsConstructor
+public abstract class Persona implements Serializable{
 
-	@Column
 	private String nombre;
-	@Column
 	private String email;
-	@Column
 	private String dni;
-	@Column
 	private String domicilio;
-	
-	
+
 }

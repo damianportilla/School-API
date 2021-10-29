@@ -19,11 +19,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table
 public class Alumno extends Persona {
@@ -33,10 +35,10 @@ public class Alumno extends Persona {
 	private Long id_Alumno;
 
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Alumno_Curso", joinColumns = { @JoinColumn(name = "id_Alumno") }, inverseJoinColumns = {
+	@JoinTable(name = "Alumno_Curso", 
+	joinColumns = { @JoinColumn(name = "id_Alumno") }, 
+	inverseJoinColumns = {
 			@JoinColumn(name = "id_Curso") })
 	private Set<Curso> cursos = new HashSet<>();
-
-
 
 }

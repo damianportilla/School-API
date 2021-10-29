@@ -22,14 +22,14 @@ import com.school.model.Alumno;
 import com.school.service.AlumnoService;
 
 @RestController
-@RequestMapping(value = "/v1/api")
+@RequestMapping(value = "/v1/api/alumnos")
 public class AlumnoController {
 
 	@Autowired
 	AlumnoService alumnoService;
 
 	// busqueda de todos los alumnos o por nombre con param
-	@GetMapping("/alumnos")
+	@GetMapping
 	public ResponseEntity<List<Alumno>> getAlumnos(@RequestParam(value = "name", required = false) String name) {
 
 		List<Alumno> alumnos = new ArrayList<>();
@@ -51,7 +51,7 @@ public class AlumnoController {
 	}
 
 	// Post
-	@PostMapping(value = "/alumnos")
+	@PostMapping
 	public ResponseEntity<Alumno> addAlumno(@RequestBody Alumno alumno, UriComponentsBuilder uriComponentsBuilder) {
 		if (alumno.getNombre().equals(null)) {
 			return new ResponseEntity(new CustomError("El campo nombre no puede estar vacio"), HttpStatus.CONFLICT);
@@ -66,7 +66,7 @@ public class AlumnoController {
 	}
 
 	// Ver un registro con por ID
-	@GetMapping(value = "/alumnos/{id}")
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Alumno> getAlumnoById(@PathVariable(name = "id") Long idAlumno) {
 		if (idAlumno == null || idAlumno <= 0) {
 			return new ResponseEntity(new CustomError("No se ingreso un id de alumno valido"), HttpStatus.CONFLICT);
@@ -83,23 +83,28 @@ public class AlumnoController {
 	}
 
 	// Actualizar un registro
-	@PutMapping(value = "/alumnos/{id}")
-	public ResponseEntity<Alumno> patchAlumno(@PathVariable(name = "id") Long idAlumno, @RequestBody Alumno alumno) {
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Alumno> patchAlumno(@PathVariable(name = "id") Long idAlumno, 
+			@RequestBody Alumno alumno) {
 		if (idAlumno == null || idAlumno <= 0) {
 			return new ResponseEntity(new CustomError("No se ingreso un id de alumno valido"), HttpStatus.CONFLICT);
 		}
 		Alumno alumnoAux = alumnoService.getById(idAlumno);
 
 		if (alumnoAux == null) {
-			return new ResponseEntity(new CustomError("No existe el alumno"), HttpStatus.NO_CONTENT);
+			return new ResponseEntity(new CustomError("No existe el alumno"), HttpStatus.CONFLICT);
 		}
 
-		alumnoAux.setNombre(alumno.getNombre());
-		alumnoAux.setDni(alumno.getDni());
-		alumnoAux.setDomicilio(alumno.getDomicilio());
-		alumnoAux.setEmail(alumno.getEmail());
+		alumnoAux=Alumno.builder()
+		.nombre(alumno.getNombre())
+		.dni(alumno.getDni())
+		.domicilio(alumno.getDomicilio())
+		.email(alumno.getEmail())
+		.id_Alumno(idAlumno)
+		.build();
 
 		alumnoService.update(alumnoAux);
+		
 		return new ResponseEntity<Alumno>(alumno, HttpStatus.OK);
 	}
 	
