@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.school.dao.CursoDAO;
 import com.school.model.Curso;
+import com.school.model.RedSocial;
 import com.school.repository.CursoRepository;
 
 @Service
@@ -44,7 +45,5 @@ public class CursoService implements CursoDAO {
 	public void remove(Long id) {
 		cursoRepository.removeCursoById(id);
 	}
-	
-	
-	
+
 }

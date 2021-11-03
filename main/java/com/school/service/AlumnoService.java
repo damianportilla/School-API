@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.school.dao.AlumnoDAO;
 import com.school.model.Alumno;
 import com.school.model.Curso;
+import com.school.model.RedSocial;
 import com.school.repository.AlumnoRepository;
 
 @Service
@@ -17,13 +18,21 @@ public class AlumnoService implements AlumnoDAO {
 	private AlumnoRepository alumnoRepository;
 
 	@Override
-	public void create(Alumno alumno) {
+	public void create(Alumno alumno) throws Exception {
+		if (alumno.getNombre() == null || alumno.getEmail() == null || alumno.getDomicilio() == null
+				|| alumno.getDni() == null) {
+			throw new Exception("Los campos no pueden estar vacios");
+		}
 		alumnoRepository.insertWithEntityManager(alumno);
 	}
 
 	@Override
-	public Alumno getById(Long id) {
-		return alumnoRepository.getAlumnoByIdWithEntityManager(id);
+	public Alumno getById(Long id) throws Exception {
+		Alumno alumno = alumnoRepository.getAlumnoByIdWithEntityManager(id);
+		if (alumno == null || alumno.getId_Alumno() <= 0) {
+			throw new Exception("ID fuera de rango");
+		}
+		return alumno;
 	}
 
 	@Override
@@ -44,6 +53,16 @@ public class AlumnoService implements AlumnoDAO {
 	@Override
 	public void update(Alumno alumno) {
 		alumnoRepository.updateAlumno(alumno);
+	}
+
+	@Override
+	public List<RedSocial> getRedSocialByID(Long idRed) {
+		return null;
+	}
+
+	@Override
+	public void insertCursoInAlumno(Alumno alumno, List<Curso> cursos) {
+		alumnoRepository.insertCursoInAlumno(alumno, cursos);
 	}
 
 }

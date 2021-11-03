@@ -33,7 +33,7 @@ public class ProfesorRepository {
 
 	@Transactional
 	public List<Profesor> findAllProfesor() {
-		return (List<Profesor>) entityManager.createQuery("from Profesor").getResultList();
+		return entityManager.createQuery("from Profesor").getResultList();
 	}
 
 	@Transactional

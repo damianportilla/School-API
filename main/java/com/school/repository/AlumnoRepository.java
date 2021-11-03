@@ -1,6 +1,8 @@
 package com.school.repository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.school.model.Alumno;
+import com.school.model.Curso;
 
 @Repository
 public class AlumnoRepository {
@@ -56,4 +59,13 @@ public class AlumnoRepository {
 		}
 	}
 
-}
+	@Transactional
+	public void insertCursoInAlumno(Alumno alumno, List<Curso> curso) {
+		alumno = getAlumnoByIdWithEntityManager(alumno.getId_Alumno());
+		Set<Curso> cursos = new HashSet<>();
+		for (Curso c : cursos) {
+			cursos.add(c);
+			entityManager.merge(c);
+			}
+	}
+	}

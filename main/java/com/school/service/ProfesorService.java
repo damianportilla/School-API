@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.school.dao.ProfesorDAO;
 import com.school.model.Alumno;
 import com.school.model.Profesor;
+import com.school.model.RedSocial;
 import com.school.repository.ProfesorRepository;
 
 @Service
@@ -34,7 +35,7 @@ public class ProfesorService implements ProfesorDAO {
 
 	@Override
 	public List<Profesor> getAll() {
-		return (List<Profesor>) profesorRepository.findAllProfesor();
+		return  profesorRepository.findAllProfesor();
 	}
 
 	@Override
@@ -46,5 +47,12 @@ public class ProfesorService implements ProfesorDAO {
 	public void remove(Long id) {
 		profesorRepository.removeProfesorById(id);
 	}
+
+	@Override
+	public List<RedSocial> getRedSocialByID(Long idRed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

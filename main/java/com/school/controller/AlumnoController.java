@@ -20,7 +20,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.school.error.CustomError;
 import com.school.model.Alumno;
 import com.school.service.AlumnoService;
-import com.school.service.CursoService;
 
 @RestController
 @RequestMapping(value = "/v1/api/alumnos")
@@ -28,9 +27,6 @@ public class AlumnoController {
 
 	@Autowired
 	AlumnoService alumnoService;
-	
-	@Autowired
-	CursoService cursoService;
 
 	// busqueda de todos los alumnos o por nombre con param
 	@GetMapping
@@ -57,32 +53,30 @@ public class AlumnoController {
 	// Post
 	@PostMapping
 	public ResponseEntity<Alumno> addAlumno(@RequestBody Alumno alumno, UriComponentsBuilder uriComponentsBuilder) {
-		if (alumno.getNombre().equals(null)) {
-			return new ResponseEntity(new CustomError("El campo nombre no puede estar vacio"), HttpStatus.CONFLICT);
+		try {
+			alumnoService.create(alumno);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setLocation(
+					uriComponentsBuilder.path("/v1/api/alumnos/{id}").buildAndExpand(alumno.getId_Alumno()).toUri());
+			return new ResponseEntity<Alumno>(alumno, HttpStatus.CREATED);
+		} catch (Exception e) {
+			String mensaje = "Error: " + e.getMessage() + e.getMessage();
+			return new ResponseEntity(mensaje, HttpStatus.CONFLICT);
 		}
-
-		alumnoService.create(alumno);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(
-				uriComponentsBuilder.path("/v1/alumnos/{id}").buildAndExpand(alumno.getId_Alumno()).toUri());
-		return new ResponseEntity<Alumno>(alumno, HttpStatus.CREATED);
-//
 	}
 
 	// Ver un registro con por ID
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Alumno> getAlumnoById(@PathVariable(name = "id") Long idAlumno) {
-		if (idAlumno == null || idAlumno <= 0) {
-			return new ResponseEntity(new CustomError("No se ingreso un id de alumno valido"), HttpStatus.CONFLICT);
-		}
-		if (idAlumno != null) {
-			Alumno alumno = alumnoService.getById(idAlumno);
-			if (alumno == null) {
-				return new ResponseEntity(new CustomError("No se ingreso un id de alumno valido"), HttpStatus.CONFLICT);
-			}
-			return new ResponseEntity<Alumno>(alumno, HttpStatus.OK);
-		}
-		return null;
+	public ResponseEntity<Alumno> getAlumnoById(@PathVariable(name = "id") Long idAlumno)  {
+	try {
+		Alumno alumno = alumnoService.getById(idAlumno);
+		return new ResponseEntity<Alumno>(alumno, HttpStatus.OK);
+	}
+	catch(Exception e) {
+		String mensaje = "Error: " + e.getMessage() + e.getMessage();
+		return new ResponseEntity(mensaje, HttpStatus.CONFLICT);
+	}
+
 	}
 
 	// Actualizar un registro
@@ -91,20 +85,30 @@ public class AlumnoController {
 		if (idAlumno == null || idAlumno <= 0) {
 			return new ResponseEntity(new CustomError("No se ingreso un id de alumno valido"), HttpStatus.CONFLICT);
 		}
-		Alumno alumnoAux = alumnoService.getById(idAlumno);
-
-		if (alumnoAux == null) {
-			return new ResponseEntity(new CustomError("No existe el alumno"), HttpStatus.CONFLICT);
+		try {
+			Alumno alumnoAux;
+			alumnoAux = alumnoService.getById(idAlumno);
+			
+			if (alumnoAux == null) {
+				return new ResponseEntity(new CustomError("No existe el alumno"), HttpStatus.CONFLICT);
+			}
+			alumnoAux = Alumno.builder().nombre(alumno.getNombre()).dni(alumno.getDni()).domicilio(alumno.getDomicilio())
+					.email(alumno.getEmail()).id_Alumno(idAlumno).build();
+			
+			alumnoService.update(alumnoAux);
+			
+			return new ResponseEntity<Alumno>(alumno, HttpStatus.OK);
+		} catch (Exception e) {
+			String mensaje = "Error: " + e.getMessage() + e.getMessage();
+			return new ResponseEntity(mensaje, HttpStatus.CONFLICT);
 		}
 
-		alumnoAux = Alumno.builder().nombre(alumno.getNombre()).dni(alumno.getDni()).domicilio(alumno.getDomicilio())
-				.email(alumno.getEmail()).id_Alumno(idAlumno).build();
-
-		alumnoService.update(alumnoAux);
-
-		return new ResponseEntity<Alumno>(alumno, HttpStatus.OK);
 	}
 
+	public ResponseEntity<List<Alumno>> insertCursoEnAlumno(
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "idCurso", required = false) Long nameidCurso) {
+		return null;
+	}
 
-	
 }

@@ -1,16 +1,18 @@
 package com.school.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,25 +25,22 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table
-public class RedSocial implements Serializable {
+public class Profesor_y_RRSS {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_RedSocial;
-	
-	@JsonBackReference
-	@OneToOne(mappedBy = "redSocial")
-	private Alumno_y_RRSS alumno_y_RRSS;
-	
-	@JsonBackReference
-	@OneToOne(mappedBy = "redSocial")
-	private Profesor_y_RRSS profesor_y_RRSS;
+	private Long id_nick;
 
-	@NotBlank
-	private String nombre;
-	
-	@NotBlank
-	private String icono;
+	private String nickname;
 
-	
+	@JsonManagedReference
+	@OneToOne
+	@JoinColumn(name = "id_RedSocial")
+	private RedSocial redSocial;
+
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "id_Profesor")
+	private Profesor profesor;
+
 }
