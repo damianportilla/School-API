@@ -1,13 +1,9 @@
 package com.school.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,10 +34,10 @@ public class Profesor extends Persona implements Serializable{
 
 	@ManyToMany
 	@JsonManagedReference
-	private Set<Curso> cursodictado = new HashSet<>();
+	private Set<Curso> cursodictado ;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "profesor")
-	private List<Profesor_y_RRSS> redesSocialProfesor;
+	private Set<Profesor_y_RRSS> redesSocialProfesor;
 
 }

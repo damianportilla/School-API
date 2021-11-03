@@ -28,20 +28,18 @@ public class RedSocial implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_RedSocial;
-	
+
+	@NotBlank
+	private String nombre;
+
+	@NotBlank
+	private String icono;
 	@JsonBackReference
 	@OneToOne(mappedBy = "redSocial")
 	private Alumno_y_RRSS alumno_y_RRSS;
-	
+
 	@JsonBackReference
 	@OneToOne(mappedBy = "redSocial")
 	private Profesor_y_RRSS profesor_y_RRSS;
 
-	@NotBlank
-	private String nombre;
-	
-	@NotBlank
-	private String icono;
-
-	
 }
