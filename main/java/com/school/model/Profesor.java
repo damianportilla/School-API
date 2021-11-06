@@ -1,7 +1,7 @@
 package com.school.model;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,11 +31,9 @@ public class Profesor extends Persona implements Serializable{
 	private Long id_Profesor;
 
 	@ManyToMany
-	@JsonManagedReference
-	private Set<Curso> cursodictado ;
+	private List<Curso> cursodictado ;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy = "profesor")
-	private Set<Profesor_y_RRSS> redesSocialProfesor;
+	private List<Profesor_y_RRSS> redesSocialProfesor;
 
 }

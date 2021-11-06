@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.school.error.CustomError;
-import com.school.model.Profesor;
 import com.school.model.RedSocial;
 import com.school.service.RedSocialService;
 
@@ -28,7 +27,8 @@ public class RedSocialController {
 			@RequestParam(value = "name", required = false) String name) {
 
 		List<RedSocial> redes = new ArrayList<>();
-
+		
+				
 		if (name == null) {
 			redes = redSocialService.getAll();
 			if (redes.isEmpty()) {
